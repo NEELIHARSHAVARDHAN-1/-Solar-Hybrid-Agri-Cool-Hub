@@ -1,0 +1,31 @@
+# Arduino
+*.ino.cpp
+*.ino.cpp.d
+
+# Build output
+build/
+dist/
+
+# PlatformIO
+.pio/
+
+# VS Code
+.vscode/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+
+# Arduino cache
+*.elf
+*.bin
+*.map
+
+# Local secrets
+secrets.h

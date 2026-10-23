@@ -1,0 +1,735 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Project Architecture &amp; IBM Bob</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:-apple-system,"Segoe UI",system-ui,sans-serif;
+  background:#0b1120;
+  color:#fff;
+  padding:28px 16px 48px;
+}
+.page{max-width:900px;margin:0 auto;}
+
+/* ── HEADER ── */
+.header{
+  background:linear-gradient(135deg,#0f1e3d 0%,#162952 60%,#0d1a3a 100%);
+  border:1px solid #2a4080;
+  border-radius:18px;
+  padding:26px 36px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:22px;
+}
+.hdr-left h1{
+  font-size:22px;font-weight:800;
+  color:#fff;line-height:1.2;margin-bottom:5px;
+}
+.hdr-left h1 span{color:#60a5fa;}
+.hdr-left p{font-size:12px;color:#93c5fd;line-height:1.5;}
+.hdr-badges{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.hdr-badge{
+  font-size:10px;font-weight:700;
+  padding:3px 10px;border-radius:20px;
+  text-transform:uppercase;letter-spacing:0.7px;
+}
+.hb-esp{background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.3);}
+.hb-py{background:rgba(96,165,250,0.15);color:#60a5fa;border:1px solid rgba(96,165,250,0.3);}
+.hb-react{background:rgba(129,140,248,0.15);color:#818cf8;border:1px solid rgba(129,140,248,0.3);}
+.hb-and{background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.3);}
+.hb-pg{background:rgba(251,191,36,0.15);color:#fbbf24;border:1px solid rgba(251,191,36,0.3);}
+
+.hdr-right{text-align:right;flex-shrink:0;}
+.hdr-right .hr-label{font-size:10px;color:#64748b;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.8px;}
+.stats-mini{display:flex;flex-direction:column;gap:4px;}
+.sm-row{
+  display:flex;align-items:center;justify-content:flex-end;gap:8px;
+  font-size:11px;color:#94a3b8;
+}
+.sm-row b{color:#fff;font-size:14px;}
+
+/* ── SECTION DIVIDER ── */
+.sec-div{
+  display:flex;align-items:center;gap:10px;
+  margin:20px 0 12px;
+}
+.sd-line{flex:1;height:1px;background:rgba(255,255,255,0.07);}
+.sd-label{
+  font-size:10.5px;font-weight:800;
+  text-transform:uppercase;letter-spacing:1.2px;
+  padding:4px 14px;border-radius:20px;
+  white-space:nowrap;
+}
+.sd-arch{background:rgba(96,165,250,0.12);color:#60a5fa;border:1px solid rgba(96,165,250,0.25);}
+.sd-bob{background:rgba(139,92,246,0.12);color:#a78bfa;border:1px solid rgba(139,92,246,0.25);}
+
+/* ── ARCHITECTURE FLOW ── */
+.arch-flow{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  align-items:start;
+  gap:0;
+  margin-bottom:14px;
+  position:relative;
+}
+/* horizontal dashed line behind steps */
+.arch-flow::before{
+  content:'';
+  position:absolute;
+  top:40px;left:9%;right:9%;
+  height:2px;
+  background:repeating-linear-gradient(90deg,#334155 0,#334155 6px,transparent 6px,transparent 12px);
+  z-index:0;
+}
+
+.arch-step{
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;z-index:1;
+  padding:0 4px;
+}
+
+/* arrow labels between steps */
+.arch-step:not(:last-child)>.as-arrow{
+  position:absolute;
+  top:34px;
+  right:-18px;
+  display:flex;flex-direction:column;align-items:center;
+  z-index:3;
+}
+.aa-icon{
+  font-size:11px;
+  background:#1e293b;
+  border:1px solid #334155;
+  border-radius:50%;
+  width:22px;height:22px;
+  display:flex;align-items:center;justify-content:center;
+}
+.aa-proto{
+  font-size:8.5px;font-weight:700;
+  color:#94a3b8;margin-top:2px;
+  text-align:center;white-space:nowrap;
+}
+
+.as-circle{
+  width:80px;height:80px;
+  border-radius:50%;
+  border:2px solid;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  margin-bottom:10px;
+  position:relative;
+}
+.as-num{
+  position:absolute;top:-4px;right:-4px;
+  width:18px;height:18px;border-radius:50%;
+  font-size:9px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;
+}
+.as-emoji{font-size:22px;margin-bottom:2px;}
+.as-shortname{font-size:9px;font-weight:700;color:rgba(255,255,255,0.6);}
+
+.as-name{font-size:12px;font-weight:800;color:#fff;text-align:center;margin-bottom:4px;}
+.as-sub{font-size:10px;color:#94a3b8;text-align:center;margin-bottom:7px;line-height:1.3;}
+.as-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:3px;}
+.aschip{
+  font-size:8.5px;font-weight:700;
+  padding:2px 6px;border-radius:5px;
+  white-space:nowrap;
+}
+
+/* step colours */
+.s-hw .as-circle{background:rgba(74,222,128,0.08);border-color:#22c55e;}
+.s-hw .as-num{background:#15803d;}
+.s-hw .as-shortname{color:#4ade80;}
+.s-hw .aschip{background:rgba(74,222,128,0.1);color:#4ade80;}
+
+.s-mqtt .as-circle{background:rgba(167,139,250,0.08);border-color:#8b5cf6;}
+.s-mqtt .as-num{background:#7c3aed;}
+.s-mqtt .as-shortname{color:#a78bfa;}
+.s-mqtt .aschip{background:rgba(167,139,250,0.1);color:#a78bfa;}
+
+.s-be .as-circle{background:rgba(96,165,250,0.08);border-color:#3b82f6;}
+.s-be .as-num{background:#1d4ed8;}
+.s-be .as-shortname{color:#60a5fa;}
+.s-be .aschip{background:rgba(96,165,250,0.1);color:#60a5fa;}
+
+.s-db .as-circle{background:rgba(251,191,36,0.08);border-color:#f59e0b;}
+.s-db .as-num{background:#b45309;}
+.s-db .as-shortname{color:#fbbf24;}
+.s-db .aschip{background:rgba(251,191,36,0.1);color:#fbbf24;}
+
+.s-ui .as-circle{background:rgba(52,211,153,0.08);border-color:#10b981;}
+.s-ui .as-num{background:#065f46;}
+.s-ui .as-shortname{color:#34d399;}
+.s-ui .aschip{background:rgba(52,211,153,0.1);color:#34d399;}
+
+/* ── DATA FLOW BAR ── */
+.flow-bar{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:10px;
+  padding:10px 18px;
+  margin-bottom:14px;
+  display:flex;align-items:center;
+  gap:0;
+  overflow:hidden;
+}
+.fb-step{
+  display:flex;align-items:center;
+  flex:1;
+  font-size:10.5px;font-weight:700;
+  color:#cbd5e1;
+  justify-content:center;
+  text-align:center;
+  line-height:1.3;
+}
+.fb-arrow{
+  color:#334155;font-size:14px;
+  flex-shrink:0;padding:0 4px;
+}
+.fb-step span{
+  display:block;
+  font-size:9px;font-weight:600;
+  color:#475569;margin-top:2px;
+}
+
+/* ── API TABLE ── */
+.api-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin-bottom:14px;
+}
+.api-card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:9px;
+  padding:9px 10px;
+  display:flex;align-items:flex-start;gap:7px;
+}
+.api-method{
+  font-size:9px;font-weight:800;
+  padding:2px 6px;border-radius:5px;
+  color:#fff;flex-shrink:0;margin-top:1px;
+  white-space:nowrap;
+}
+.m-get{background:#15803d;}
+.m-patch{background:#b45309;}
+.m-put{background:#1d4ed8;}
+.m-sse{background:#7c3aed;}
+.api-info{flex:1;}
+.api-path{font-size:10px;font-weight:700;color:#e2e8f0;margin-bottom:2px;font-family:monospace;}
+.api-desc{font-size:9.5px;color:#64748b;line-height:1.3;}
+
+/* ── DATABASE ── */
+.db-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:7px;margin-bottom:14px;
+}
+.db-table{
+  border-radius:9px;border:1px solid;
+  padding:9px 10px;
+  background:rgba(251,191,36,0.04);
+  border-color:rgba(251,191,36,0.2);
+}
+.dt-name{
+  font-size:11.5px;font-weight:800;
+  color:#fbbf24;margin-bottom:5px;
+  display:flex;align-items:center;gap:5px;
+}
+.dt-cols{display:flex;flex-direction:column;gap:3px;}
+.dt-col{
+  font-size:9.5px;color:#94a3b8;
+  display:flex;align-items:center;gap:5px;
+}
+.dt-col .pk{
+  font-size:8px;font-weight:700;
+  background:rgba(251,191,36,0.15);color:#fbbf24;
+  padding:1px 4px;border-radius:3px;
+}
+.dt-col .fk{
+  font-size:8px;font-weight:700;
+  background:rgba(96,165,250,0.15);color:#60a5fa;
+  padding:1px 4px;border-radius:3px;
+}
+.dt-col .uq{
+  font-size:8px;font-weight:700;
+  background:rgba(52,211,153,0.15);color:#34d399;
+  padding:1px 4px;border-radius:3px;
+}
+
+/* ── IBM BOB SECTION ── */
+.bob-header{
+  background:linear-gradient(135deg,#1a0a3d 0%,#241059 60%,#180938 100%);
+  border:1px solid #3730a3;
+  border-radius:14px;
+  padding:16px 22px;
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:12px;
+}
+.bob-logo{
+  width:56px;height:56px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;
+  flex-shrink:0;
+}
+.bob-desc h3{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px;}
+.bob-desc p{font-size:11.5px;color:#a5b4fc;line-height:1.5;}
+
+.bob-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.bob-card{
+  border-radius:12px;
+  border:1.5px solid;
+  overflow:hidden;
+}
+.bc-hdr{
+  padding:10px 14px;
+  display:flex;align-items:center;gap:8px;
+}
+.bc-hdr .bh-icon{font-size:18px;}
+.bc-hdr .bh-title{font-size:12px;font-weight:800;color:#fff;}
+.bc-hdr .bh-sub{font-size:9.5px;color:rgba(255,255,255,0.6);margin-top:1px;}
+.bc-body{
+  padding:10px 14px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.bc-item{
+  display:flex;align-items:flex-start;gap:7px;
+  font-size:10.5px;color:#cbd5e1;line-height:1.4;
+}
+.bi-dot{
+  flex-shrink:0;width:6px;height:6px;
+  border-radius:50%;margin-top:4px;
+}
+.bc-item b{color:#fff;font-weight:700;}
+
+/* card colours */
+.bob-plan{border-color:#3b82f6;background:rgba(59,130,246,0.04);}
+.bob-plan .bc-hdr{background:rgba(59,130,246,0.15);}
+.bob-plan .bi-dot{background:#3b82f6;}
+
+.bob-code{border-color:#22c55e;background:rgba(34,197,94,0.04);}
+.bob-code .bc-hdr{background:rgba(34,197,94,0.15);}
+.bob-code .bi-dot{background:#22c55e;}
+
+.bob-debug{border-color:#f59e0b;background:rgba(245,158,11,0.04);}
+.bob-debug .bc-hdr{background:rgba(245,158,11,0.15);}
+.bob-debug .bi-dot{background:#f59e0b;}
+
+.bob-test{border-color:#a78bfa;background:rgba(167,139,250,0.04);}
+.bob-test .bc-hdr{background:rgba(167,139,250,0.15);}
+.bob-test .bi-dot{background:#a78bfa;}
+
+/* ── BOB IMPACT BAR ── */
+.bob-impact{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:8px;margin-top:12px;
+}
+.bi-card{
+  background:rgba(139,92,246,0.08);
+  border:1px solid rgba(139,92,246,0.2);
+  border-radius:10px;
+  padding:10px 12px;
+  text-align:center;
+}
+.bi-num{font-size:22px;font-weight:800;color:#c4b5fd;margin-bottom:3px;}
+.bi-label{font-size:10px;color:#94a3b8;line-height:1.3;}
+
+/* footer */
+.footer{
+  text-align:center;
+  margin-top:28px;
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,0.06);
+  font-size:11px;color:#334155;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+
+<div class="header">
+  <div class="hdr-left">
+    <h1>Solar Hybrid <span>Agri Cool Hub</span></h1>
+    <p>Project Architecture &amp; IBM Bob Technology — Technical Design Overview</p>
+    <div class="hdr-badges">
+      <span class="hdr-badge hb-esp">ESP32-S3 Firmware</span>
+      <span class="hdr-badge hb-py">FastAPI · Python</span>
+      <span class="hdr-badge hb-react">React · TypeScript</span>
+      <span class="hdr-badge hb-and">Android · Java</span>
+      <span class="hdr-badge hb-pg">PostgreSQL</span>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="hr-label">System at a Glance</div>
+    <div class="stats-mini">
+      <div class="sm-row"><b>5</b> Architecture Layers</div>
+      <div class="sm-row"><b>9</b> REST API Endpoints</div>
+      <div class="sm-row"><b>4</b> Database Tables</div>
+      <div class="sm-row"><b>24</b> Automated Tests</div>
+      <div class="sm-row"><b>15s</b> Sensor Publish Interval</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="sec-div">
+  <div class="sd-line"></div>
+  <div class="sd-label sd-arch">🏗️ Project Architecture — Components &amp; Technologies</div>
+  <div class="sd-line"></div>
+</div>
+
+
+<div class="arch-flow">
+
+  <div class="arch-step s-hw">
+    <div class="as-arrow">
+      <div class="aa-icon">📡</div>
+      <div class="aa-proto">MQTT<br />TLS 8883</div>
+    </div>
+    <div class="as-circle">
+      <div class="as-num">1</div>
+      <div class="as-emoji">🔧</div>
+      <div class="as-shortname">FIRMWARE</div>
+    </div>
+    <div class="as-name">Hardware Layer</div>
+    <div class="as-sub">ESP32-S3 N16R8<br />Arduino + ESP-IDF C++</div>
+    <div class="as-chips">
+      <span class="aschip">SHT4x Temp/RH</span>
+      <span class="aschip">MQ-3 Ethanol</span>
+      <span class="aschip">MQ-135 Air</span>
+      <span class="aschip">MQ-4 Methane</span>
+      <span class="aschip">INA219 Power</span>
+      <span class="aschip">NEO-6M GPS</span>
+      <span class="aschip">DS3231 RTC</span>
+      <span class="aschip">PSRAM Buffer</span>
+    </div>
+  </div>
+
+  <div class="arch-step s-mqtt">
+    <div class="as-arrow">
+      <div class="aa-icon">🔄</div>
+      <div class="aa-proto">aiomqtt<br />Python</div>
+    </div>
+    <div class="as-circle">
+      <div class="as-num">2</div>
+      <div class="as-emoji">☁️</div>
+      <div class="as-shortname">BROKER</div>
+    </div>
+    <div class="as-name">MQTT Broker</div>
+    <div class="as-sub">HiveMQ Cloud<br />Port 8883 TLS</div>
+    <div class="as-chips">
+      <span class="aschip">MQTT v3.1.1</span>
+      <span class="aschip">QoS Level 1</span>
+      <span class="aschip">LWT Online/Offline</span>
+      <span class="aschip">TLS Encrypted</span>
+    </div>
+  </div>
+
+  <div class="arch-step s-be">
+    <div class="as-arrow">
+      <div class="aa-icon">🗄️</div>
+      <div class="aa-proto">asyncpg<br />SQLAlchemy</div>
+    </div>
+    <div class="as-circle">
+      <div class="as-num">3</div>
+      <div class="as-emoji">⚙️</div>
+      <div class="as-shortname">BACKEND</div>
+    </div>
+    <div class="as-name">Backend API</div>
+    <div class="as-sub">FastAPI · Python 3.11<br />Uvicorn · asyncio</div>
+    <div class="as-chips">
+      <span class="aschip">Pydantic v2</span>
+      <span class="aschip">Alert Engine</span>
+      <span class="aschip">SSE Stream</span>
+      <span class="aschip">REST API</span>
+    </div>
+  </div>
+
+  <div class="arch-step s-db">
+    <div class="as-arrow">
+      <div class="aa-icon">📤</div>
+      <div class="aa-proto">REST API<br />+ SSE</div>
+    </div>
+    <div class="as-circle">
+      <div class="as-num">4</div>
+      <div class="as-emoji">🗄️</div>
+      <div class="as-shortname">DATABASE</div>
+    </div>
+    <div class="as-name">PostgreSQL 15</div>
+    <div class="as-sub">SQLAlchemy 2.x async<br />asyncpg driver</div>
+    <div class="as-chips">
+      <span class="aschip">devices</span>
+      <span class="aschip">telemetry</span>
+      <span class="aschip">alerts</span>
+      <span class="aschip">thresholds</span>
+    </div>
+  </div>
+
+  <div class="arch-step s-ui">
+    <div class="as-circle">
+      <div class="as-num">5</div>
+      <div class="as-emoji">📱</div>
+      <div class="as-shortname">CLIENT</div>
+    </div>
+    <div class="as-name">Client Apps</div>
+    <div class="as-sub">Android Java/Kotlin<br />React 19 + TypeScript</div>
+    <div class="as-chips">
+      <span class="aschip">Retrofit 2</span>
+      <span class="aschip">MPAndroidChart</span>
+      <span class="aschip">Recharts</span>
+      <span class="aschip">SSE Live Cards</span>
+      <span class="aschip">Lottie</span>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="flow-bar">
+  <div class="fb-step">🌡️ Sensors Read<span>Every 1 second</span></div>
+  <div class="fb-arrow">▶</div>
+  <div class="fb-step">📦 JSON Built<span>10-field payload</span></div>
+  <div class="fb-arrow">▶</div>
+  <div class="fb-step">📡 MQTT TLS Publish<span>Every 15 seconds</span></div>
+  <div class="fb-arrow">▶</div>
+  <div class="fb-step">✅ Validated + Stored<span>Pydantic → PostgreSQL</span></div>
+  <div class="fb-arrow">▶</div>
+  <div class="fb-step">🚨 Alert Evaluated<span>WARNING / CRITICAL</span></div>
+  <div class="fb-arrow">▶</div>
+  <div class="fb-step">⚡ SSE Pushed<span>Live to dashboard</span></div>
+  <div class="fb-arrow">▶</div>
+  <div class="fb-step">📱 Farmer Notified<span>Android + Web App</span></div>
+</div>
+
+
+<div class="sec-div" style="margin-top:4px">
+  <div class="sd-line"></div>
+  <div class="sd-label sd-arch" style="font-size:9.5px">REST APIs &amp; Database Schema</div>
+  <div class="sd-line"></div>
+</div>
+
+<div class="api-grid">
+  <div class="api-card">
+    <span class="api-method m-get">GET</span>
+    <div class="api-info">
+      <div class="api-path">/devices</div>
+      <div class="api-desc">All registered devices with online status</div>
+    </div>
+  </div>
+  <div class="api-card">
+    <span class="api-method m-get">GET</span>
+    <div class="api-info">
+      <div class="api-path">/devices/{id}/status</div>
+      <div class="api-desc">Latest telemetry + online flag</div>
+    </div>
+  </div>
+  <div class="api-card">
+    <span class="api-method m-get">GET</span>
+    <div class="api-info">
+      <div class="api-path">/devices/{id}/telemetry</div>
+      <div class="api-desc">Paginated sensor history (from/to filter)</div>
+    </div>
+  </div>
+  <div class="api-card">
+    <span class="api-method m-get">GET</span>
+    <div class="api-info">
+      <div class="api-path">/devices/{id}/alerts/active</div>
+      <div class="api-desc">All unresolved alerts for device</div>
+    </div>
+  </div>
+  <div class="api-card">
+    <span class="api-method m-patch">PATCH</span>
+    <div class="api-info">
+      <div class="api-path">/alerts/{id}/resolve</div>
+      <div class="api-desc">Mark alert resolved — sets resolved_at</div>
+    </div>
+  </div>
+  <div class="api-card">
+    <span class="api-method m-put">PUT</span>
+    <div class="api-info">
+      <div class="api-path">/devices/{id}/thresholds</div>
+      <div class="api-desc">Update warning + critical thresholds</div>
+    </div>
+  </div>
+  <div class="api-card">
+    <span class="api-method m-sse">SSE</span>
+    <div class="api-info">
+      <div class="api-path">/devices/{id}/stream</div>
+      <div class="api-desc">Live push stream — telemetry + alert level</div>
+    </div>
+  </div>
+  <div class="api-card">
+    <span class="api-method m-get">GET</span>
+    <div class="api-info">
+      <div class="api-path">/health</div>
+      <div class="api-desc">Service status + MQTT connected flag</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="db-row">
+  <div class="db-table">
+    <div class="dt-name">🖥️ devices</div>
+    <div class="dt-cols">
+      <div class="dt-col"><span class="pk">PK</span> id</div>
+      <div class="dt-col"><span class="uq">UQ</span> device_id</div>
+      <div class="dt-col">last_seen · is_online</div>
+      <div class="dt-col">created_at</div>
+    </div>
+  </div>
+  <div class="db-table">
+    <div class="dt-name">📈 telemetry</div>
+    <div class="dt-cols">
+      <div class="dt-col"><span class="pk">PK</span> id</div>
+      <div class="dt-col"><span class="fk">FK</span> device_id</div>
+      <div class="dt-col"><span class="uq">UQ</span> (device_id, timestamp)</div>
+      <div class="dt-col">temp · humidity · mq3/135/4</div>
+    </div>
+  </div>
+  <div class="db-table">
+    <div class="dt-name">🚨 alerts</div>
+    <div class="dt-cols">
+      <div class="dt-col"><span class="pk">PK</span> id</div>
+      <div class="dt-col"><span class="fk">FK</span> device_id</div>
+      <div class="dt-col">alert_level · alert_type</div>
+      <div class="dt-col">value · threshold · resolved_at</div>
+    </div>
+  </div>
+  <div class="db-table">
+    <div class="dt-name">⚙️ device_thresholds</div>
+    <div class="dt-cols">
+      <div class="dt-col"><span class="pk">PK</span> id</div>
+      <div class="dt-col"><span class="fk">FK</span> device_id (unique)</div>
+      <div class="dt-col">temp/humidity warning+critical</div>
+      <div class="dt-col">mq3/mq135/mq4 warning+critical</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="sec-div">
+  <div class="sd-line"></div>
+  <div class="sd-label sd-bob">🤖 IBM Bob Technology — Role in Development</div>
+  <div class="sd-line"></div>
+</div>
+
+<div class="bob-header">
+  <div class="bob-logo">🤖</div>
+  <div class="bob-desc">
+    <h3>IBM Bob — AI Software Engineering Assistant</h3>
+    <p>IBM Bob lives inside the IDE and reads every file in the repository. It planned the architecture, wrote production code across all 4 technology layers, diagnosed hardware and software bugs, and authored all documentation — making a 4-specialist project achievable by a small student team.</p>
+  </div>
+</div>
+
+<div class="bob-grid">
+
+  <div class="bob-card bob-plan">
+    <div class="bc-hdr">
+      <span class="bh-icon">🗺️</span>
+      <div>
+        <div class="bh-title">Planning &amp; Architecture</div>
+        <div class="bh-sub">Before any code was written</div>
+      </div>
+    </div>
+    <div class="bc-body">
+      <div class="bc-item"><span class="bi-dot"></span>Designed the full 5-layer system architecture from scratch — hardware to apps</div>
+      <div class="bc-item"><span class="bi-dot"></span>Defined the exact 10-field JSON telemetry payload all layers agreed on</div>
+      <div class="bc-item"><span class="bi-dot"></span>Specified all MQTT topics, database schema, and REST API contracts</div>
+      <div class="bc-item"><span class="bi-dot"></span>Designed the two-tier WARNING / CRITICAL alert classification model</div>
+      <div class="bc-item"><span class="bi-dot"></span>Planned offline deduplication strategy using (device_id, timestamp) unique key</div>
+    </div>
+  </div>
+
+  <div class="bob-card bob-code">
+    <div class="bc-hdr">
+      <span class="bh-icon">💻</span>
+      <div>
+        <div class="bh-title">Code Generation</div>
+        <div class="bh-sub">Across all 4 tech stacks</div>
+      </div>
+    </div>
+    <div class="bc-body">
+      <div class="bc-item"><span class="bi-dot"></span>Generated all <b>18 C++ firmware modules</b> — sensors, Wi-Fi, MQTT, buffer, GPS, RTC</div>
+      <div class="bc-item"><span class="bi-dot"></span>Built the entire <b>FastAPI backend</b> — routes, services, MQTT client, SSE stream</div>
+      <div class="bc-item"><span class="bi-dot"></span>Wrote the <b>React SSE hook</b> using useSyncExternalStore for real-time cards</div>
+      <div class="bc-item"><span class="bi-dot"></span>Generated <b>Retrofit interface</b> and all Android fragments with ViewBinding</div>
+      <div class="bc-item"><span class="bi-dot"></span>Wrote <b>SVG radial gauge</b> component with threshold colour transitions</div>
+    </div>
+  </div>
+
+  <div class="bob-card bob-debug">
+    <div class="bc-hdr">
+      <span class="bh-icon">🐛</span>
+      <div>
+        <div class="bh-title">Debugging</div>
+        <div class="bh-sub">Critical bugs caught &amp; fixed</div>
+      </div>
+    </div>
+    <div class="bc-body">
+      <div class="bc-item"><span class="bi-dot"></span><b>Silent data loss:</b> str(bytes) → .decode() fix in MQTT handler — all data was being discarded</div>
+      <div class="bc-item"><span class="bi-dot"></span><b>Hardware damage prevented:</b> Specified 10kΩ/20kΩ voltage divider for MQ sensor ADC pins</div>
+      <div class="bc-item"><span class="bi-dot"></span><b>Android crash:</b> Fixed NullPointerException via ViewBinding onDestroyView pattern</div>
+      <div class="bc-item"><span class="bi-dot"></span><b>DB pool exhaustion:</b> SSE generator restructured to release connections before sleep</div>
+      <div class="bc-item"><span class="bi-dot"></span><b>GPS freeze:</b> Rewrote blocking GPS read as non-blocking byte-by-byte UART drain</div>
+    </div>
+  </div>
+
+  <div class="bob-card bob-test">
+    <div class="bc-hdr">
+      <span class="bh-icon">✅</span>
+      <div>
+        <div class="bh-title">Testing &amp; Documentation</div>
+        <div class="bh-sub">Quality + knowledge transfer</div>
+      </div>
+    </div>
+    <div class="bc-body">
+      <div class="bc-item"><span class="bi-dot"></span>Wrote <b>24 pytest tests</b> on in-memory SQLite — no real DB or broker needed</div>
+      <div class="bc-item"><span class="bi-dot"></span>Tests cover schema validation, alert engine, deduplication, all API endpoints</div>
+      <div class="bc-item"><span class="bi-dot"></span>Authored <b>8 documentation files</b>: wiring, API, deployment, config, troubleshooting</div>
+      <div class="bc-item"><span class="bi-dot"></span>Wrote <b>idempotent schema migrations</b> — auto-run at startup, zero data loss</div>
+      <div class="bc-item"><span class="bi-dot"></span>Maintained a <b>48-decision engineering log</b> (DECISIONS.md) throughout development</div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="bob-impact">
+  <div class="bi-card">
+    <div class="bi-num">4</div>
+    <div class="bi-label">Tech Stacks<br />C++ · Python · TypeScript · Java</div>
+  </div>
+  <div class="bi-card">
+    <div class="bi-num">18</div>
+    <div class="bi-label">Firmware Modules<br />Generated by Bob</div>
+  </div>
+  <div class="bi-card">
+    <div class="bi-num">24</div>
+    <div class="bi-label">Automated Tests<br />All passing</div>
+  </div>
+  <div class="bi-card">
+    <div class="bi-num">8</div>
+    <div class="bi-label">Documentation Files<br />End-to-end authored</div>
+  </div>
+</div>
+
+<div class="footer">Solar Hybrid Agri Cool Hub  ·  IBM SkillsBuild Hackathon  ·  Made with IBM Bob</div>
+
+</div>
+</body>
+</html>

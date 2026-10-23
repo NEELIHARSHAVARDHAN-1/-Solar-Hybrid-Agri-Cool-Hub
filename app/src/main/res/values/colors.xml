@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ── Brand greens ─────────────────────────────────────────────────── -->
+    <color name="green_900">#1B5E20</color>
+    <color name="green_800">#2E7D32</color>
+    <color name="green_700">#388E3C</color>
+    <color name="green_600">#43A047</color>
+    <color name="green_500">#4CAF50</color>
+    <color name="green_200">#A5D6A7</color>
+    <color name="green_100">#C8E6C9</color>
+    <color name="green_50">#E8F5E9</color>
+
+    <!-- ── Premium cream / warm surface ────────────────────────────────── -->
+    <color name="cream_bg">#F8F6F0</color>
+    <color name="cream_card">#FFFFFF</color>
+    <color name="cream_surface">#FAFAF7</color>
+
+    <!-- ── Accent palette ───────────────────────────────────────────────── -->
+    <color name="amber_700">#F57F17</color>
+    <color name="amber_500">#FFC107</color>
+    <color name="amber_200">#FFE082</color>
+    <color name="red_700">#C62828</color>
+    <color name="red_200">#EF9A9A</color>
+    <color name="blue_600">#1E88E5</color>
+    <color name="blue_200">#90CAF9</color>
+    <color name="teal_600">#00897B</color>
+    <color name="teal_200">#80CBC4</color>
+    <color name="purple_600">#7B1FA2</color>
+    <color name="purple_200">#CE93D8</color>
+    <color name="orange_600">#FB8C00</color>
+    <color name="orange_200">#FFCC80</color>
+
+    <!-- ── UI neutrals ──────────────────────────────────────────────────── -->
+    <color name="white">#FFFFFF</color>
+    <color name="on_surface">#1C2B1D</color>
+    <color name="on_surface_variant">#4A6741</color>
+    <color name="outline">#C5D9BC</color>
+    <color name="divider">#E8EDE8</color>
+    <color name="shadow">#10000000</color>
+
+    <!-- ── Sensor accent colours ────────────────────────────────────────── -->
+    <color name="sensor_temp">#FB8C00</color>
+    <color name="sensor_hum">#1E88E5</color>
+    <color name="sensor_mq3">#7B1FA2</color>
+    <color name="sensor_mq135">#00897B</color>
+    <color name="sensor_mq4">#2E7D32</color>
+    <color name="sensor_battery_ok">#2E7D32</color>
+    <color name="sensor_battery_low">#C62828</color>
+    <color name="sensor_battery_mid">#F57F17</color>
+
+    <!-- ── Ripeness stage colours ────────────────────────────────────────── -->
+    <color name="ripeness_unripe">#2E7D32</color>       <!-- deep green -->
+    <color name="ripeness_ripening">#F9A825</color>     <!-- golden yellow -->
+    <color name="ripeness_ripe">#E65100</color>         <!-- warm orange -->
+    <color name="ripeness_overripe">#6A1B9A</color>     <!-- dark purple -->
+    <color name="ripeness_unknown">#78909C</color>      <!-- grey -->
+
+    <!-- ── Connectivity state colours ───────────────────────────────────── -->
+    <color name="conn_live">#43A047</color>
+    <color name="conn_stale">#FB8C00</color>
+    <color name="conn_offline">#C62828</color>
+
+    <!-- ── Nav ──────────────────────────────────────────────────────────── -->
+    <color name="nav_bg">#1B5E20</color>
+    <color name="nav_icon_selected">#FFFFFF</color>
+    <color name="nav_icon_unselected">#A5D6A7</color>
+</resources>

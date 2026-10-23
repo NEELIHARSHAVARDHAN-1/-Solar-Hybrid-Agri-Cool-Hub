@@ -1,0 +1,8 @@
+# Secrets file — never commit
+config_secrets.h
+
+# Arduino build artifacts
+build/
+*.bin
+*.elf
+*.map

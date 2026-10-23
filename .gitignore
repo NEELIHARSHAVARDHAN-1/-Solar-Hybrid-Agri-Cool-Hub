@@ -1,0 +1,46 @@
+# Android build artifacts
+app/build/
+app/.gradle/
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+local.properties
+
+# Gradle wrapper caches
+.gradle/
+build/
+
+# Python / Backend
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+.pytest_cache/
+.mypy_cache/
+htmlcov/
+.coverage
+*.log
+
+# Backend secrets
+backend/.env
+firmware/src/config_secrets.h
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Bob internal
+.bob/

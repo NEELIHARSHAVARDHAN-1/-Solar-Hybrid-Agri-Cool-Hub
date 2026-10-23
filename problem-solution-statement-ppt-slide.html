@@ -1,0 +1,288 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Problem &amp; Solution Statement</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #d0d0d0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+  }
+
+  /* Slide: 16:9 aspect, fixed reference width */
+  .slide {
+    width: 960px;
+    height: 540px;
+    background: #ffffff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 36px 52px 28px 52px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  }
+
+  /* ── Title ── */
+  .slide-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a3a8f;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+  .title-rule {
+    width: 100%;
+    height: 2px;
+    background: #1a3a8f;
+    margin-bottom: 18px;
+  }
+
+  /* ── Body: two sections ── */
+  .body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px 0;
+  }
+
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: #c8c8c8;
+    margin: 2px 0;
+  }
+
+  .section-heading {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 7px;
+  }
+
+  /* Two-column layout for content */
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .col-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    font-size: 11.8px;
+    color: #1f2328;
+    line-height: 1.45;
+    margin-bottom: 5px;
+  }
+  .col-item .dot {
+    flex-shrink: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-top: 4px;
+  }
+  .dot-problem { background: #c0392b; }
+  .dot-solution { background: #1a7a3c; }
+
+  .col-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    margin-bottom: 6px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  .label-who   { background: #fde8e8; color: #991b1b; }
+  .label-why   { background: #fef3c7; color: #92400e; }
+  .label-how   { background: #e0f2fe; color: #0c4a6e; }
+  .label-impact{ background: #dcfce7; color: #14532d; }
+
+  /* ── Footer ── */
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid #e5e7eb;
+  }
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  /* SkillUp logo SVG-style */
+  .skillup-logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .skillup-icon {
+    width: 22px;
+    height: 22px;
+  }
+  .skillup-text {
+    font-size: 15px;
+    font-weight: 800;
+    color: #1a1a2e;
+    letter-spacing: -0.5px;
+  }
+  .skillup-text span { color: #e63946; }
+  .footer-right {
+    text-align: right;
+  }
+  .footer-right .collab {
+    font-size: 10px;
+    color: #57606a;
+    margin-bottom: 1px;
+  }
+  .footer-right .ibm-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+  .footer-right .ibm-text span {
+    color: #1a3a8f;
+    font-weight: 800;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+
+  
+  <div class="slide-title">Problem &amp; Solution Statement</div>
+  <div class="title-rule"></div>
+
+  
+  <div class="body">
+
+    
+    <div class="section">
+      <div class="section-heading">Problem Statement</div>
+      <div class="cols">
+
+        
+        <div>
+          <div class="col-label label-who">Who is Affected</div>
+          <div class="col-item">
+            <div class="dot dot-problem"></div>
+            <span>Smallholder farmers &amp; transport operators in rural India face significant <strong>post-harvest crop losses</strong> due to unmonitored storage conditions during transportation.</span>
+          </div>
+          <div class="col-label label-why" style="margin-top:6px">Key Challenges</div>
+          <div class="col-item">
+            <div class="dot dot-problem"></div>
+            <span>No way to monitor temperature, humidity, or gas levels inside a sealed moving storage unit.</span>
+          </div>
+          <div class="col-item">
+            <div class="dot dot-problem"></div>
+            <span>Spoilage is discovered only at the destination — too late to save the produce.</span>
+          </div>
+        </div>
+
+        
+        <div>
+          <div class="col-label label-why">Limitations of Existing Solutions</div>
+          <div class="col-item">
+            <div class="dot dot-problem"></div>
+            <span>Manual checks are infrequent, unreliable, and provide no real-time data.</span>
+          </div>
+          <div class="col-item">
+            <div class="dot dot-problem"></div>
+            <span>Commercial cold-chain IoT systems are priced for large logistics companies — unaffordable for small farms.</span>
+          </div>
+          <div class="col-item">
+            <div class="dot dot-problem"></div>
+            <span>No affordable, solar-capable, connected solution exists for last-mile agricultural transport.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    
+    <div class="section">
+      <div class="section-heading">Solution Statement</div>
+      <div class="cols">
+
+        
+        <div>
+          <div class="col-label label-how">Proposed Solution</div>
+          <div class="col-item">
+            <div class="dot dot-solution"></div>
+            <span><strong>Solar Hybrid Agri Cool Hub</strong> — an IoT-powered smart preservation system that actively cools (Peltier module), humidifies (solar-powered), and continuously monitors crop storage conditions.</span>
+          </div>
+          <div class="col-label label-how" style="margin-top:6px">How It Works</div>
+          <div class="col-item">
+            <div class="dot dot-solution"></div>
+            <span>Sensors measure temp, humidity &amp; gas every 15 s → encrypted to cloud → AI alert engine → farmer notified instantly on Android app or web dashboard.</span>
+          </div>
+        </div>
+
+        
+        <div>
+          <div class="col-label label-impact">Key Features &amp; Benefits</div>
+          <div class="col-item">
+            <div class="dot dot-solution"></div>
+            <span>Real-time alerts (WARNING &amp; CRITICAL) before spoilage occurs — time to act.</span>
+          </div>
+          <div class="col-item">
+            <div class="dot dot-solution"></div>
+            <span>Offline resilience — no data lost during connectivity outages; replayed automatically.</span>
+          </div>
+          <div class="col-item">
+            <div class="dot dot-solution"></div>
+            <span>Solar-hybrid power reduces electricity costs for rural, off-grid deployments.</span>
+          </div>
+          <div class="col-item">
+            <div class="dot dot-solution"></div>
+            <span><strong>Impact:</strong> Reduced post-harvest losses → higher crop quality → better farmer income → sustainable food supply chains.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  
+  <div class="footer">
+    <div class="footer-left">
+      <div class="skillup-logo">
+        <svg class="skillup-icon" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="19" fill="#1a1a2e" stroke="#1a1a2e" stroke-width="1"></circle>
+          <path d="M12 26 L20 14 L28 26" stroke="#e63946" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+          <circle cx="20" cy="14" r="2.5" fill="#ffffff"></circle>
+        </svg>
+        <span class="skillup-text">Skill<span>Up</span></span>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="collab">In collaboration with</div>
+      <div class="ibm-text"><span>IBM</span> SkillsBuild</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

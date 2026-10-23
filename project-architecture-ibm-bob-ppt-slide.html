@@ -1,0 +1,397 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Project Architecture &amp; IBM Bob Technology</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:#c8c8c8;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    font-family:"Segoe UI",Arial,sans-serif;
+  }
+
+  .slide{
+    width:960px;
+    min-height:540px;
+    background:#ffffff;
+    display:flex;
+    flex-direction:column;
+    padding:28px 46px 22px 46px;
+    box-shadow:0 8px 32px rgba(0,0,0,0.18);
+  }
+
+  /* Title */
+  .slide-title{
+    font-size:23px;font-weight:700;
+    color:#1a3a8f;margin-bottom:7px;
+    letter-spacing:-0.3px;
+  }
+  .title-rule{width:100%;height:2px;background:#1a3a8f;margin-bottom:14px;}
+
+  /* Two main sections */
+  .body{display:flex;flex-direction:column;gap:0;flex:1;}
+
+  /* ─── ARCHITECTURE SECTION ─── */
+  .arch-section{margin-bottom:10px;}
+  .sec-head{
+    font-size:13px;font-weight:800;
+    color:#1a1a2e;margin-bottom:9px;
+    display:flex;align-items:center;gap:7px;
+  }
+  .sec-head .sh-dot{
+    width:10px;height:10px;border-radius:50%;
+    background:#1a3a8f;flex-shrink:0;
+  }
+
+  /* Architecture: 5-layer flow */
+  .arch-flow{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:0;
+    position:relative;
+    margin-bottom:8px;
+  }
+  .arch-layer{
+    display:flex;flex-direction:column;align-items:center;
+    position:relative;z-index:1;
+  }
+  /* arrow connector */
+  .arch-layer:not(:last-child)::after{
+    content:'▶';
+    position:absolute;
+    top:22px;
+    right:-11px;
+    font-size:13px;
+    color:#94a3b8;
+    z-index:2;
+  }
+  .al-box{
+    width:100%;
+    border-radius:8px;
+    border:1.5px solid;
+    padding:7px 6px 6px;
+    text-align:center;
+    margin-bottom:5px;
+  }
+  .al-icon{font-size:18px;margin-bottom:3px;}
+  .al-name{font-size:10.5px;font-weight:800;margin-bottom:2px;}
+  .al-tech{font-size:9.5px;color:#64748b;line-height:1.3;}
+
+  /* colours per layer */
+  .layer-hw  {background:#f0fdf4;border-color:#16a34a;}
+  .layer-hw .al-name{color:#15803d;}
+  .layer-mqtt{background:#faf5ff;border-color:#7c3aed;}
+  .layer-mqtt .al-name{color:#6d28d9;}
+  .layer-be  {background:#eff6ff;border-color:#2563eb;}
+  .layer-be .al-name{color:#1d4ed8;}
+  .layer-db  {background:#fffbeb;border-color:#d97706;}
+  .layer-db .al-name{color:#92400e;}
+  .layer-ui  {background:#ecfeff;border-color:#0891b2;}
+  .layer-ui .al-name{color:#0e7490;}
+
+  /* tech chips below each layer */
+  .al-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:3px;margin-top:2px;}
+  .chip{
+    font-size:9px;font-weight:700;
+    padding:2px 6px;border-radius:6px;
+    white-space:nowrap;
+  }
+  .chip-g{background:#dcfce7;color:#166534;}
+  .chip-p{background:#ede9fe;color:#5b21b6;}
+  .chip-b{background:#dbeafe;color:#1e40af;}
+  .chip-y{background:#fef3c7;color:#92400e;}
+  .chip-c{background:#cffafe;color:#164e63;}
+
+  /* data flow label */
+  .flow-label{
+    text-align:center;font-size:10px;
+    color:#57606a;font-style:italic;
+    margin-bottom:8px;
+  }
+
+  /* APIs row */
+  .api-row{
+    display:flex;gap:6px;flex-wrap:wrap;
+    margin-bottom:8px;
+  }
+  .api-pill{
+    display:flex;align-items:center;gap:5px;
+    background:#f1f5f9;border:1px solid #cbd5e1;
+    border-radius:8px;padding:4px 10px;
+    font-size:10.5px;font-weight:600;color:#334155;
+  }
+  .api-pill .method{
+    font-size:9px;font-weight:800;
+    padding:1px 5px;border-radius:4px;
+    color:#fff;
+  }
+  .m-get{background:#16a34a;}
+  .m-patch{background:#d97706;}
+  .m-put{background:#2563eb;}
+  .m-sse{background:#7c3aed;}
+
+  /* divider */
+  .sec-divider{
+    width:100%;height:1px;
+    background:#e2e8f0;margin:10px 0;
+  }
+
+  /* ─── IBM BOB SECTION ─── */
+  .bob-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+  }
+  .bob-card{
+    border-radius:9px;
+    border:1.5px solid;
+    padding:9px 10px;
+  }
+  .bc-head{
+    display:flex;align-items:center;gap:6px;
+    margin-bottom:6px;
+  }
+  .bc-icon{font-size:15px;}
+  .bc-title{font-size:11px;font-weight:800;}
+  .bc-items{display:flex;flex-direction:column;gap:3px;}
+  .bc-item{
+    display:flex;align-items:flex-start;gap:5px;
+    font-size:10px;color:#374151;line-height:1.35;
+  }
+  .bi-dot{
+    flex-shrink:0;width:5px;height:5px;
+    border-radius:50%;margin-top:3.5px;
+  }
+
+  .bc-plan{background:#eff6ff;border-color:#93c5fd;}
+  .bc-plan .bc-title{color:#1d4ed8;}
+  .bc-plan .bi-dot{background:#2563eb;}
+
+  .bc-code{background:#f0fdf4;border-color:#86efac;}
+  .bc-code .bc-title{color:#15803d;}
+  .bc-code .bi-dot{background:#16a34a;}
+
+  .bc-debug{background:#fff7ed;border-color:#fdba74;}
+  .bc-debug .bc-title{color:#c2410c;}
+  .bc-debug .bi-dot{background:#ea580c;}
+
+  .bc-test{background:#faf5ff;border-color:#c4b5fd;}
+  .bc-test .bc-title{color:#6d28d9;}
+  .bc-test .bi-dot{background:#7c3aed;}
+
+  /* footer */
+  .footer{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    margin-top:12px;padding-top:8px;
+    border-top:1px solid #e5e7eb;
+  }
+  .skillup-logo{display:flex;align-items:center;gap:6px;}
+  .skillup-icon{width:20px;height:20px;}
+  .skillup-text{font-size:14px;font-weight:800;color:#1a1a2e;letter-spacing:-0.5px;}
+  .skillup-text span{color:#e63946;}
+  .footer-right{text-align:right;}
+  .footer-right .collab{font-size:9.5px;color:#57606a;margin-bottom:1px;}
+  .footer-right .ibm-text{font-size:12px;font-weight:700;color:#1a1a2e;}
+  .footer-right .ibm-text span{color:#1a3a8f;font-weight:800;}
+</style>
+</head>
+<body>
+<div class="slide">
+
+  
+  <div class="slide-title">Project Architecture &amp; IBM Bob Technology</div>
+  <div class="title-rule"></div>
+
+  <div class="body">
+
+    
+    <div class="arch-section">
+      <div class="sec-head">
+        <div class="sh-dot"></div>
+        Project Architecture — Components, Technologies &amp; Data Flow
+      </div>
+
+      
+      <div class="arch-flow">
+
+        <div class="arch-layer">
+          <div class="al-box layer-hw">
+            <div class="al-icon">🔧</div>
+            <div class="al-name">Hardware Layer</div>
+            <div class="al-tech">ESP32-S3 N16R8<br />Arduino / ESP-IDF C++</div>
+          </div>
+          <div class="al-chips">
+            <span class="chip chip-g">SHT4x Temp/RH</span>
+            <span class="chip chip-g">MQ-3/135/4 Gas</span>
+            <span class="chip chip-g">INA219 Power</span>
+            <span class="chip chip-g">NEO-6M GPS</span>
+            <span class="chip chip-g">DS3231 RTC</span>
+            <span class="chip chip-g">PSRAM Buffer</span>
+          </div>
+        </div>
+
+        <div class="arch-layer">
+          <div class="al-box layer-mqtt">
+            <div class="al-icon">☁️</div>
+            <div class="al-name">MQTT Broker</div>
+            <div class="al-tech">HiveMQ Cloud<br />TLS Port 8883</div>
+          </div>
+          <div class="al-chips">
+            <span class="chip chip-p">MQTT v3.1.1</span>
+            <span class="chip chip-p">QoS Level 1</span>
+            <span class="chip chip-p">LWT Online/Offline</span>
+            <span class="chip chip-p">TLS Encrypted</span>
+          </div>
+        </div>
+
+        <div class="arch-layer">
+          <div class="al-box layer-be">
+            <div class="al-icon">⚙️</div>
+            <div class="al-name">Backend API</div>
+            <div class="al-tech">FastAPI · Python 3.11<br />Uvicorn · asyncio</div>
+          </div>
+          <div class="al-chips">
+            <span class="chip chip-b">aiomqtt Ingestion</span>
+            <span class="chip chip-b">Pydantic Validation</span>
+            <span class="chip chip-b">Alert Engine</span>
+            <span class="chip chip-b">SSE Stream</span>
+          </div>
+        </div>
+
+        <div class="arch-layer">
+          <div class="al-box layer-db">
+            <div class="al-icon">🗄️</div>
+            <div class="al-name">Database</div>
+            <div class="al-tech">PostgreSQL 15<br />SQLAlchemy 2.x async</div>
+          </div>
+          <div class="al-chips">
+            <span class="chip chip-y">devices table</span>
+            <span class="chip chip-y">telemetry table</span>
+            <span class="chip chip-y">alerts table</span>
+            <span class="chip chip-y">thresholds table</span>
+          </div>
+        </div>
+
+        <div class="arch-layer">
+          <div class="al-box layer-ui">
+            <div class="al-icon">📱</div>
+            <div class="al-name">Client Apps</div>
+            <div class="al-tech">Android (Java/Kotlin)<br />React 19 + TypeScript</div>
+          </div>
+          <div class="al-chips">
+            <span class="chip chip-c">Retrofit 2</span>
+            <span class="chip chip-c">MPAndroidChart</span>
+            <span class="chip chip-c">Recharts</span>
+            <span class="chip chip-c">SSE Live Cards</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="flow-label">Data flows: Sensors → MQTT TLS → FastAPI ingest → PostgreSQL → REST API / SSE → Android App + Web Dashboard</div>
+
+      
+      <div class="api-row">
+        <span style="font-size:10.5px;font-weight:700;color:#334155;align-self:center">REST APIs:</span>
+        <span class="api-pill"><span class="method m-get">GET</span>/devices — device registry + online status</span>
+        <span class="api-pill"><span class="method m-get">GET</span>/devices/{id}/status — latest reading</span>
+        <span class="api-pill"><span class="method m-get">GET</span>/devices/{id}/telemetry — history</span>
+        <span class="api-pill"><span class="method m-get">GET</span>/alerts/active — open alerts</span>
+        <span class="api-pill"><span class="method m-patch">PATCH</span>/alerts/{id}/resolve</span>
+        <span class="api-pill"><span class="method m-put">PUT</span>/devices/{id}/thresholds</span>
+        <span class="api-pill"><span class="method m-sse">SSE</span>/devices/{id}/stream — live push</span>
+      </div>
+    </div>
+
+    <div class="sec-divider"></div>
+
+    
+    <div>
+      <div class="sec-head">
+        <div class="sh-dot" style="background:#7c3aed"></div>
+        IBM Bob Technology — Role in Development
+      </div>
+
+      <div class="bob-grid">
+
+        <div class="bob-card bc-plan">
+          <div class="bc-head">
+            <span class="bc-icon">🗺️</span>
+            <span class="bc-title">Planning &amp; Architecture</span>
+          </div>
+          <div class="bc-items">
+            <div class="bc-item"><span class="bi-dot"></span>Designed full 4-layer system architecture before any code was written</div>
+            <div class="bc-item"><span class="bi-dot"></span>Defined MQTT topics, JSON payload schema, and database table design</div>
+            <div class="bc-item"><span class="bi-dot"></span>Specified all 9 REST API endpoints and deduplication strategy</div>
+            <div class="bc-item"><span class="bi-dot"></span>Planned two-tier WARNING/CRITICAL alert classification model</div>
+          </div>
+        </div>
+
+        <div class="bob-card bc-code">
+          <div class="bc-head">
+            <span class="bc-icon">💻</span>
+            <span class="bc-title">Code Generation</span>
+          </div>
+          <div class="bc-items">
+            <div class="bc-item"><span class="bi-dot"></span>Generated all 18 C++ firmware modules (sensors, Wi-Fi, MQTT, buffer)</div>
+            <div class="bc-item"><span class="bi-dot"></span>Built full FastAPI backend — routes, services, MQTT client, SSE stream</div>
+            <div class="bc-item"><span class="bi-dot"></span>Wrote React SSE hook using <em>useSyncExternalStore</em> for live updates</div>
+            <div class="bc-item"><span class="bi-dot"></span>Generated Retrofit API interface and all Android fragments (Java)</div>
+          </div>
+        </div>
+
+        <div class="bob-card bc-debug">
+          <div class="bc-head">
+            <span class="bc-icon">🐛</span>
+            <span class="bc-title">Debugging</span>
+          </div>
+          <div class="bc-items">
+            <div class="bc-item"><span class="bi-dot"></span>Fixed silent data-loss bug: <em>str(bytes)</em> → <em>.decode()</em> in MQTT handler</div>
+            <div class="bc-item"><span class="bi-dot"></span>Prevented ESP32 ADC damage by specifying voltage-divider circuit for MQ sensors</div>
+            <div class="bc-item"><span class="bi-dot"></span>Fixed Android <em>NullPointerException</em> crash via ViewBinding lifecycle pattern</div>
+            <div class="bc-item"><span class="bi-dot"></span>Resolved SSE DB connection pool exhaustion by closing session before sleep</div>
+          </div>
+        </div>
+
+        <div class="bob-card bc-test">
+          <div class="bc-head">
+            <span class="bc-icon">✅</span>
+            <span class="bc-title">Testing &amp; Docs</span>
+          </div>
+          <div class="bc-items">
+            <div class="bc-item"><span class="bi-dot"></span>Wrote 24-test pytest suite running on in-memory SQLite — no real DB needed</div>
+            <div class="bc-item"><span class="bi-dot"></span>Tests cover schema validation, alert engine, deduplication, all API endpoints</div>
+            <div class="bc-item"><span class="bi-dot"></span>Authored all 8 project documents: wiring, API, deployment, configuration guides</div>
+            <div class="bc-item"><span class="bi-dot"></span>Wrote idempotent schema migrations run automatically at server startup</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  
+  <div class="footer">
+    <div class="skillup-logo">
+      <svg class="skillup-icon" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="#1a1a2e"></circle>
+        <path d="M12 26 L20 14 L28 26" stroke="#e63946" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+        <circle cx="20" cy="14" r="2.5" fill="#ffffff"></circle>
+      </svg>
+      <span class="skillup-text">Skill<span>Up</span></span>
+    </div>
+    <div class="footer-right">
+      <div class="collab">In collaboration with</div>
+      <div class="ibm-text"><span>IBM</span> SkillsBuild</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

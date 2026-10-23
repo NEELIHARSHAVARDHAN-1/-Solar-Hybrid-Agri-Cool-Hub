@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ic_launcher_foreground.xml — vector foreground for the adaptive launcher icon.
+  Draws a stylised leaf / droplet to represent the agri-cool theme.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Outer green circle -->
+    <path
+        android:fillColor="#2E7D32"
+        android:pathData="M54,20 C35.2,20 20,35.2 20,54 C20,72.8 35.2,88 54,88
+                          C72.8,88 88,72.8 88,54 C88,35.2 72.8,20 54,20Z" />
+
+    <!-- Leaf shape -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,34 C54,34 34,50 34,62 C34,70.8 43.2,78 54,78
+                          C64.8,78 74,70.8 74,62 C74,50 54,34 54,34Z" />
+
+    <!-- Stem -->
+    <path
+        android:fillColor="#2E7D32"
+        android:pathData="M54,60 L54,78"
+        android:strokeColor="#2E7D32"
+        android:strokeWidth="3" />
+</vector>

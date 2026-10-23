@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Fruit ripeness monitoring card
+  Stages: Unripe → Ripening → Ripe → Overripe
+  All estimates are threshold-based; no AI model is connected.
+-->
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="6dp"
+    app:cardCornerRadius="20dp"
+    app:cardBackgroundColor="@color/cream_card"
+    android:layout_marginBottom="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Header row: title + fruit selector button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/ripeness_card_title"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/green_800" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSelectFruit"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ripeness_select_fruit"
+                android:textSize="12sp"
+                app:strokeColor="@color/green_600"
+                android:textColor="@color/green_700" />
+        </LinearLayout>
+
+        <!-- Fruit emoji + name -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/tvFruitEmoji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🥭"
+                android:textSize="40sp"
+                android:layout_marginEnd="16dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvFruitName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mango"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/on_surface" />
+
+                <TextView
+                    android:id="@+id/tvRipenessStage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ripeness_unavailable"
+                    android:textSize="14sp"
+                    android:textColor="@color/ripeness_unknown"
+                    android:textStyle="bold"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Progress bar — ripeness stage 0→100 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="6dp">
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progressRipeness"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:indeterminate="false"
+                android:progress="0"
+                app:trackCornerRadius="6dp"
+                app:indicatorColor="@color/ripeness_unripe"
+                app:trackColor="@color/divider" />
+
+            <TextView
+                android:id="@+id/tvRipenessPercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="@color/on_surface_variant" />
+        </LinearLayout>
+
+        <!-- Stage markers -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="14dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Unripe"
+                android:textSize="10sp"
+                android:textColor="@color/ripeness_unripe" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ripening"
+                android:textSize="10sp"
+                android:textColor="@color/ripeness_ripening"
+                android:gravity="center" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ripe"
+                android:textSize="10sp"
+                android:textColor="@color/ripeness_ripe"
+                android:gravity="center" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Overripe"
+                android:textSize="10sp"
+                android:textColor="@color/ripeness_overripe"
+                android:gravity="end" />
+        </LinearLayout>
+
+        <!-- Experimental disclaimer -->
+        <TextView
+            android:id="@+id/tvRipenessDisclaimer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ripeness_experimental"
+            android:textSize="11sp"
+            android:textColor="@color/amber_700"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Timestamp -->
+        <TextView
+            android:id="@+id/tvRipenessTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:textColor="@color/on_surface_variant" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

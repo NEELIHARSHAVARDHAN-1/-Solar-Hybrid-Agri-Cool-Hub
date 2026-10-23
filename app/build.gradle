@@ -1,0 +1,91 @@
+plugins {
+    id 'com.android.application' version '8.3.2'
+    id 'org.jetbrains.kotlin.android' version '1.9.24'
+}
+
+android {
+    namespace 'com.agrihub.coolhub'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.agrihub.coolhub"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            buildConfigField "boolean", "DEMO_MODE", "true"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
+}
+
+dependencies {
+    // AndroidX core
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    // Navigation Component
+    implementation 'androidx.navigation:navigation-fragment:2.8.9'
+    implementation 'androidx.navigation:navigation-ui:2.8.9'
+
+    // Lifecycle / ViewModel / LiveData
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.8.7'
+
+    // Retrofit + OkHttp (networking)
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+
+    // Gson (JSON)
+    implementation 'com.google.code.gson:gson:2.11.0'
+
+    // MPAndroidChart (history charts)
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // Lottie (splash animation)
+    implementation 'com.airbnb.android:lottie:6.4.0'
+
+    // SharedPreferences / Security
+    implementation 'androidx.security:security-crypto:1.1.0-alpha06'
+
+    // osmdroid — OpenStreetMap tiles
+    implementation 'org.osmdroid:osmdroid-android:6.1.18'
+
+    // ViewPager2 (for Alerts tabs — explicit dependency)
+    implementation 'androidx.viewpager2:viewpager2:1.1.0'
+
+    // WorkManager (for background alert polling)
+    implementation 'androidx.work:work-runtime:2.9.1'
+
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+}
